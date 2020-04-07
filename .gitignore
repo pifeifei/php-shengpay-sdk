@@ -1,0 +1,11 @@
+.DS_Store
+/vendor
+/cache
+.idea/*
+/.env
+*.pem
+/.php_cs.cache
+composer.lock
+*.log
+*.zip
+*.lnk
