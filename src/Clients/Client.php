@@ -3,6 +3,7 @@
 namespace Pff\Client\Clients;
 
 use Pff\Client\Request\Request;
+use Pff\Client\Signature\MD5Signature;
 use Pff\Client\Traits\HttpTrait;
 use Pff\Client\Traits\RegionTrait;
 use Pff\Client\Credentials\StsCredential;
@@ -72,7 +73,7 @@ class Client
         return $this;
     }
     /**
-     * @return SignatureInterface|BearerTokenSignature|ShaHmac1Signature|ShaHmac256Signature|ShaHmac256WithRsaSignature
+     * @return SignatureInterface|BearerTokenSignature|ShaHmac1Signature|ShaHmac256Signature|ShaHmac256WithRsaSignature|MD5Signature
      */
     public function getSignature()
     {
