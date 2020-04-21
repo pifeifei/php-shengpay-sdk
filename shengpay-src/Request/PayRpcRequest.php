@@ -12,6 +12,8 @@ use Pff\ShengPay\Filter\ShengPayFilter;
  */
 class PayRpcRequest extends RpcRequest
 {
+    // protected $sandbox = false;// 无沙箱环境
+
     /**
      * 创建支付订单
      *
