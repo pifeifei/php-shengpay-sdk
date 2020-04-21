@@ -78,6 +78,7 @@ class UserAccountRpcRequest extends RpcRequest
             [$query['merchantNo'], $query['userName']],
             $uriStr
         );
+        unset($query['merchantNo'], $query['userName']);
         $this->path($this->wrap($uriStr));
         $this->product('shengpay-user-account')
             ->method('GET')
