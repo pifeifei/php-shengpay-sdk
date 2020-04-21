@@ -11,6 +11,10 @@ return [
                 [
                     'global' => 'openapi.shengpay.com',
                 ],
+            'shengpay-user-account' =>
+                [
+                    'global' => 'api.shengpay.com'
+                ],
             'ecs' =>
                 [
                     'cn-shanghai' => 'ecs-cn-hangzhou.aliyuncs.com',
