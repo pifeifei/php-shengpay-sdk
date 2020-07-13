@@ -2,8 +2,10 @@
 
 namespace Pff\ShengPay\Request;
 
+use Exception;
 use Pff\Client\Exception\ClientException;
-use Pff\ShengPay\Filter\ShengPayFilter;
+use Pff\Client\Exception\ServerException;
+use Pff\Client\Support\Arrays;
 
 /**
  * Class UserAccountRpcRequest
@@ -14,6 +16,56 @@ class UserAccountRpcRequest extends RpcRequest
     protected $sandbox = false;
     protected $host = 'api.shengpay.com';
     protected $hostSandbox = 'wdtest.shengpay.com';
+
+    /**
+     * 秘钥文件路径
+     * @var string
+     */
+    protected $privateKeyFile;
+    /**
+     * 秘钥字符串
+     * @var string
+     */
+    protected $privateKey;
+
+    /**
+     * @return string
+     */
+    public function getPrivateKeyFile()
+    {
+        return $this->privateKeyFile;
+    }
+
+    /**
+     * @param string $privateKeyFile
+     * @return UserAccountRpcRequest
+     */
+    public function setPrivateKeyFile($privateKeyFile)
+    {
+        $this->privateKeyFile = $privateKeyFile;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrivateKey()
+    {
+        if (empty($this->privateKey) && file_exists($this->getPrivateKeyFile())) {
+            $this->privateKey = file_get_contents($this->getPrivateKeyFile());
+        }
+        return $this->privateKey;
+    }
+
+    /**
+     * @param string $privateKey
+     * @return UserAccountRpcRequest
+     */
+    public function setPrivateKey($privateKey)
+    {
+        $this->privateKey = $privateKey;
+        return $this;
+    }
 
     /**
      * @return bool
@@ -47,7 +99,7 @@ class UserAccountRpcRequest extends RpcRequest
         }
         return $this;
     }
-    
+
     /**
      * 开通个人盛付通账户
      * @param $sharing
@@ -69,16 +121,20 @@ class UserAccountRpcRequest extends RpcRequest
      * @param $query
      * @return $this
      * @throws ClientException
+     * @throws ServerException
      */
     public function query($query)
     {
+        if ($this->credential()->getAccessKeyId()) {
+            $query['merchantNo'] = $this->credential()->getAccessKeyId();
+        }
         $uriStr = 'userAccount/{merchantNo}-{userName}';
         $uriStr = str_replace(
             ['{merchantNo}', '{userName}'],
             [$query['merchantNo'], $query['userName']],
             $uriStr
         );
-        unset($query['merchantNo'], $query['userName']);
+
         $this->path($this->wrap($uriStr));
         $this->product('shengpay-user-account')
             ->method('GET')
@@ -119,6 +175,62 @@ class UserAccountRpcRequest extends RpcRequest
         return $this;
     }
 
+    /**
+     * Resolve Common Parameters.
+     *
+     * @throws ClientException
+     * @throws Exception
+     */
+    protected function resolveCommonParameters()
+    {
+        if (strtoupper($this->method) !== 'GET' && $this->credential()->getAccessKeyId()) {
+            $this->options['query']['merchantNo'] = $this->credential()->getAccessKeyId();
+        }
+
+        $this->options['query']['sign'] = $this->signature();
+        // 其他公共参数
+    }
+
+    /**
+     * Sign the parameters.
+     *
+     * @return mixed
+     * @throws ClientException
+     * @throws ServerException
+     */
+    protected function signature()
+    {
+        return $this->httpClient()
+            ->getSignature()
+            ->sign(
+                $this->stringToSign(),
+                $this->getPrivateKey() ? $this->getPrivateKey() : $this->credential()->getAccessKeySecret()
+            );
+    }
+
+    /**
+     * @return string
+     */
+    public function stringToSign()
+    {
+        $query       = isset($this->options['query']) ? $this->options['query'] : [];
+        $form_params = isset($this->options['form_params']) ? $this->options['form_params'] : [];
+        $parameters  = Arrays::merge([$query, $form_params]);
+        ksort($parameters);
+        $sign = http_build_query($parameters);
+        if ($this->isUserAccount()) {
+            unset($parameters['merchantNo'], $parameters['userName']);
+            unset($this->options['query']['merchantNo'], $this->options['query']['userName']);
+        }
+
+        return $sign;
+//        return Sign::rpcString($this->method, $parameters);
+    }
+
+    protected function isUserAccount()
+    {
+        return $this->method === 'GET' && false !== strpos($this->uri->getPath(), "userAccount/");
+    }
 
     /**
      * Wrapping an API endpoint.

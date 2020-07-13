@@ -64,13 +64,13 @@ class RpcRequest extends ClientRpcRequest
      * @throws ClientException
      * @throws ServerException
      */
-    private function signature()
+    protected function signature()
     {
         return $this->httpClient()
             ->getSignature()
             ->sign(
                 $this->stringToSign(),
-                $this->credential()->getAccessKeySecret() . '&'
+                $this->credential()->getAccessKeySecret()
             );
     }
 
