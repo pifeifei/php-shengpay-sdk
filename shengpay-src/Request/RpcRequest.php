@@ -6,8 +6,6 @@ use Exception;
 use Pff\Client\Exception\ClientException;
 use Pff\Client\Exception\ServerException;
 use Pff\Client\Request\RpcRequest as ClientRpcRequest;
-use Pff\Client\Support\Sign;
-use Pff\ShengPay\Filter\ShengPayFilter;
 
 class RpcRequest extends ClientRpcRequest
 {
@@ -51,7 +49,7 @@ class RpcRequest extends ClientRpcRequest
     {
         if ($this->method === 'POST' || $this->method === 'PUT') {
             foreach ($this->options['query'] as $api_key => $api_value) {
-                $this->options['json'][$api_key] = $api_value;
+                $this->options['form_params'][$api_key] = $api_value;
             }
             unset($this->options['query']);
         }
