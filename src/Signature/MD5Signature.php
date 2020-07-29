@@ -42,6 +42,6 @@ class MD5Signature extends Signature implements SignatureInterface
      */
     public function sign($string, $accessKeySecret = '')
     {
-        return md5($string . $accessKeySecret);
+        return strtoupper(md5($string . $accessKeySecret));
     }
 }

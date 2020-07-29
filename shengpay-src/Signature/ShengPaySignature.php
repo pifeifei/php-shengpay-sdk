@@ -6,9 +6,10 @@ use Pff\Client\Signature\Signature;
 use Pff\Client\Signature\SignatureInterface;
 
 /**
+ * @deprecated see Pff\Client\Signature\MD5Signature
  * Class ShengPaySignature
  *
- * @package   Pff\Signature
+ * @package   Pff\ShengPay\Signature
  */
 class ShengPaySignature extends Signature implements SignatureInterface
 {
