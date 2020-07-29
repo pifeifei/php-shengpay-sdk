@@ -31,7 +31,7 @@ class RpcRequest extends ClientRpcRequest
             $this->options['query']['merchantNo'] = $this->credential()->getAccessKeyId();
         }
         $this->options['query']['charset']        = $this->charset;
-        $this->options['query']['requestTime']    = gmdate($this->dateTimeFormat);
+        $this->options['query']['requestTime']    = date($this->dateTimeFormat);
         if (isset($this->options['query']['exts']) && is_array($this->options['query']['exts'])) {
             $this->options['query']['exts'] = json_encode($this->options['query']['exts']);
         }
@@ -49,7 +49,7 @@ class RpcRequest extends ClientRpcRequest
     {
         if ($this->method === 'POST' || $this->method === 'PUT') {
             foreach ($this->options['query'] as $api_key => $api_value) {
-                $this->options['form_params'][$api_key] = $api_value;
+                $this->options['json'][$api_key] = $api_value;
             }
             unset($this->options['query']);
         }

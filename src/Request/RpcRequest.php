@@ -132,13 +132,13 @@ class RpcRequest extends Request
      * @throws ClientException
      * @throws ServerException
      */
-    private function signature()
+    protected function signature()
     {
         return $this->httpClient()
                     ->getSignature()
                     ->sign(
                         $this->stringToSign(),
-                        $this->credential()->getAccessKeySecret() . '&'
+                        $this->credential()->getAccessKeySecret()
                     );
     }
 
@@ -149,9 +149,10 @@ class RpcRequest extends Request
     {
         $query       = isset($this->options['query']) ? $this->options['query'] : [];
         $form_params = isset($this->options['form_params']) ? $this->options['form_params'] : [];
-        $parameters  = Arrays::merge([$query, $form_params]);
+        $json        = isset($this->options['json']) ? $this->options['json'] : [];
+        $parameters  = Arrays::merge([$query, $form_params, $json]);
 
-        return Sign::rpcString($this->method, $parameters);
+        return json_encode($parameters);
     }
 
     /**
