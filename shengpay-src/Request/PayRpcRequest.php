@@ -112,6 +112,7 @@ class PayRpcRequest extends RpcRequest
     }
 
     /**
+     * @deprecated see SharingRpcRequest::sharing()
      * 分账
      * @param $sharing
      * @return $this
@@ -130,6 +131,7 @@ class PayRpcRequest extends RpcRequest
     }
 
     /**
+     * @deprecated see SharingRpcRequest::sharingQuery()
      * 分账查询
      * @param $sharingQuery
      * @return $this
