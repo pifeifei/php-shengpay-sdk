@@ -2,8 +2,8 @@
 
 namespace Pff\ShengPay\Request;
 
+use Exception;
 use Pff\Client\Exception\ClientException;
-use Pff\ShengPay\Filter\ShengPayFilter;
 
 /**
  * Class SharingRpcRequest
@@ -129,6 +129,25 @@ class SharingRpcRequest extends RpcRequest
     }
 
 
+    /**
+     * Resolve Common Parameters.
+     *
+     * @throws ClientException
+     * @throws Exception
+     */
+    protected function resolveCommonParameters()
+    {
+        if ($this->credential()->getAccessKeyId()) {
+            $this->options['query']['senderId'] = $this->credential()->getAccessKeyId();
+            $this->options['query']['customerNo'] = $this->credential()->getAccessKeyId();
+        }
+        $this->options['query']['senderTime']    = date($this->dateTimeFormat);
+
+        $signature = $this->httpClient()->getSignature();
+        $this->options['headers']['signType'] = $signature->getMethod();
+        $this->options['headers']['signMsg'] = $this->signature();
+        // 其他公共参数
+    }
 //账户余额查询: /v1/balance_inquiry
 //补充商户余额: /v1/funds_movement
 }

@@ -10,7 +10,7 @@ use Pff\Client\Request\RpcRequest as ClientRpcRequest;
 class RpcRequest extends ClientRpcRequest
 {
 
-    private $dateTimeFormat = 'YmdHis';
+    protected $dateTimeFormat = 'YmdHis';
 
     private $charset = 'UTF-8';
 
@@ -32,9 +32,6 @@ class RpcRequest extends ClientRpcRequest
         }
         $this->options['query']['charset']        = $this->charset;
         $this->options['query']['requestTime']    = date($this->dateTimeFormat);
-        if (isset($this->options['query']['exts']) && is_array($this->options['query']['exts'])) {
-            $this->options['query']['exts'] = json_encode($this->options['query']['exts']);
-        }
 
         $signature = $this->httpClient()->getSignature();
         $this->options['headers']['signType'] = $signature->getMethod();
@@ -48,8 +45,8 @@ class RpcRequest extends ClientRpcRequest
     protected function repositionParameters()
     {
         if ($this->method === 'POST' || $this->method === 'PUT') {
-            foreach ($this->options['query'] as $api_key => $api_value) {
-                $this->options['json'][$api_key] = $api_value;
+            foreach ($this->options['query'] as $key => $value) {
+                $this->options['json'][$key] = is_array($value) ? json_encode($value) : $value;
             }
             unset($this->options['query']);
         }

@@ -22,7 +22,7 @@ class RpcRequest extends Request
     /**
      * @var string
      */
-    private $dateTimeFormat = 'Y-m-d\TH:i:s\Z';
+    protected $dateTimeFormat = 'Y-m-d\TH:i:s\Z';
 
     /**
      * Resolve request parameter.
