@@ -13,8 +13,21 @@ use Pff\Client\Support\Arrays;
  */
 class UserAccountRpcRequest extends RpcRequest
 {
+    /**
+     * @deprecated
+     * @var bool
+     */
     protected $sandbox = false;
+    /**
+     * @deprecated
+     * @var string
+     */
     protected $host = 'api.shengpay.com';
+
+    /**
+     * @deprecated
+     * @var string
+     */
     protected $hostSandbox = 'wdtest.shengpay.com';
 
     /**
@@ -68,6 +81,7 @@ class UserAccountRpcRequest extends RpcRequest
     }
 
     /**
+     * @deprecated
      * @return bool
      */
     public function inSandbox()
@@ -76,6 +90,7 @@ class UserAccountRpcRequest extends RpcRequest
     }
 
     /**
+     * @deprecated
      * 设置在沙箱中运行
      *
      * @param bool $sandbox

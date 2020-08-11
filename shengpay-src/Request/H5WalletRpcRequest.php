@@ -11,11 +11,26 @@ use Pff\ShengPay\Filter\ShengPayFilter;
  */
 class H5WalletRpcRequest extends RpcRequest
 {
+    /**
+     * @deprecated
+     * @var bool
+     */
     protected $sandbox = false;
+
+    /**
+     * @deprecated
+     * @var string
+     */
     protected $host = 'ann.shengpay.com';
+
+    /**
+     * @deprecated
+     * @var string
+     */
     protected $hostSandbox = 'anntest.shengpay.com';
 
     /**
+     * @deprecated
      * @return bool
      */
     public function inSandbox()
@@ -24,6 +39,7 @@ class H5WalletRpcRequest extends RpcRequest
     }
 
     /**
+     * @deprecated
      * 设置在沙箱中运行
      *
      * @param bool $sandbox
