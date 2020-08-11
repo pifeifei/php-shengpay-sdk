@@ -3,7 +3,6 @@
 namespace Pff\ShengPay\Request;
 
 use Pff\Client\Exception\ClientException;
-use Pff\ShengPay\Filter\ShengPayFilter;
 
 /**
  * Class UserAccountRpcRequest
@@ -21,13 +20,13 @@ class H5WalletRpcRequest extends RpcRequest
      * @deprecated
      * @var string
      */
-    protected $host = 'ann.shengpay.com';
+    protected $host = 'wmc.shengpay.com';
 
     /**
      * @deprecated
      * @var string
      */
-    protected $hostSandbox = 'anntest.shengpay.com';
+    protected $hostSandbox = 'wmctest.shengpay.com';
 
     /**
      * @deprecated
@@ -50,6 +49,7 @@ class H5WalletRpcRequest extends RpcRequest
     }
 
     /**
+     * @deprecated
      * 自动设置域名
      * @return $this
      * @throws ClientException
@@ -87,11 +87,10 @@ class H5WalletRpcRequest extends RpcRequest
      * @param string $endpoint
      *
      * @return string
-     * @throws ClientException
      */
     protected function wrap($endpoint)
     {
-        $this->autoHostOrSandboxHost();
+//        $this->autoHostOrSandboxHost();
         return ("cloud/v1/") . ltrim($endpoint, '/');
     }
 }

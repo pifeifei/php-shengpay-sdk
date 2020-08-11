@@ -101,6 +101,7 @@ class UserAccountRpcRequest extends RpcRequest
     }
 
     /**
+     * @deprecated
      * 自动设置域名
      * @return $this
      * @throws ClientException
@@ -257,7 +258,7 @@ class UserAccountRpcRequest extends RpcRequest
      */
     protected function wrap($endpoint)
     {
-        $this->autoHostOrSandboxHost();
+//        $this->autoHostOrSandboxHost();
         return ($this->inSandbox() ? "api/" : "wangdai/v1/") . ltrim($endpoint, '/');
     }
 }
