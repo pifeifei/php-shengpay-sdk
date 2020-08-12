@@ -6,6 +6,7 @@ use Pff\Client\Filter\ClientFilter;
 use Pff\Client\Exception\ClientException;
 
 /**
+ * @deprecated
  * Trait RegionTrait
  *
  * @package Pff\Client\Traits
@@ -19,6 +20,7 @@ trait RegionTrait
     public $regionId;
 
     /**
+     * @deprecated
      * @param string $regionId
      *
      * @return $this

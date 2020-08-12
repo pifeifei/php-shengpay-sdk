@@ -76,7 +76,7 @@ class RpcRequest extends Request
     protected function resolveCommonParameters()
     {
         $signature                                  = $this->httpClient()->getSignature();
-        $this->options['query']['RegionId']         = $this->realRegionId();
+//        $this->options['query']['RegionId']         = $this->realRegionId();
         $this->options['query']['Format']           = $this->format;
         $this->options['query']['SignatureMethod']  = $signature->getMethod();
         $this->options['query']['SignatureVersion'] = $signature->getVersion();

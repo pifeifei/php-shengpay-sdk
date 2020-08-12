@@ -219,6 +219,7 @@ trait AcsTrait
     }
 
     /**
+     * @deprecated
      * @return string
      * @throws ClientException
      */

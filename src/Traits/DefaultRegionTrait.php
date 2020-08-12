@@ -7,6 +7,7 @@ use Pff\Client\Filter\ClientFilter;
 use Pff\Client\Exception\ClientException;
 
 /**
+ * @deprecated
  * Trait DefaultRegionTrait
  *
  * @package Pff\Client\Traits
@@ -16,11 +17,13 @@ use Pff\Client\Exception\ClientException;
 trait DefaultRegionTrait
 {
     /**
+     * @deprecated
      * @var string|null Default RegionId
      */
     protected static $defaultRegionId;
 
     /**
+     * @deprecated
      * @param $regionId
      *
      * @throws ClientException
@@ -33,6 +36,7 @@ trait DefaultRegionTrait
     }
 
     /**
+     * @deprecated
      * @return string|null
      * @deprecated
      * @codeCoverageIgnore
@@ -43,6 +47,7 @@ trait DefaultRegionTrait
     }
 
     /**
+     * @deprecated
      * Get the default RegionId.
      *
      * @return string|null
@@ -53,6 +58,7 @@ trait DefaultRegionTrait
     }
 
     /**
+     * @deprecated
      * Set the default RegionId.
      *
      * @param string $regionId

@@ -4,6 +4,7 @@ namespace Pff\Client\Clients;
 
 use Pff\Client\Request\Request;
 use Pff\Client\Signature\MD5Signature;
+use Pff\Client\Traits\ConfigTrait;
 use Pff\Client\Traits\HttpTrait;
 use Pff\Client\Traits\RegionTrait;
 use Pff\Client\Credentials\StsCredential;
@@ -29,6 +30,7 @@ class Client
     use HttpTrait;
     use RegionTrait;
     use ManageTrait;
+    use ConfigTrait;
 
     /**
      * @var CredentialsInterface|AccessKeyCredential|BearerTokenCredential|StsCredential|EcsRamRoleCredential|RamRoleArnCredential|RsaKeyPairCredential
