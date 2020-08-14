@@ -12,7 +12,7 @@ class RpcRequest extends ClientRpcRequest
 
     protected $dateTimeFormat = 'YmdHis';
 
-    private $charset = 'UTF-8';
+    protected $charset = 'UTF-8';
 
     /**
      * @var string 货币类型

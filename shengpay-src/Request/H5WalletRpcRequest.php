@@ -2,7 +2,9 @@
 
 namespace Pff\ShengPay\Request;
 
+use Exception;
 use Pff\Client\Exception\ClientException;
+use Pff\Client\Support\Arrays;
 
 /**
  * Class UserAccountRpcRequest
@@ -92,5 +94,37 @@ class H5WalletRpcRequest extends RpcRequest
     {
 //        $this->autoHostOrSandboxHost();
         return ("cloud/v1/") . ltrim($endpoint, '/');
+    }
+
+    /**
+     * Resolve Common Parameters.
+     *
+     * @throws ClientException
+     * @throws Exception
+     */
+    protected function resolveCommonParameters()
+    {
+        if ($this->credential()->getAccessKeyId()) {
+            $this->options['query']['merchantNo'] = $this->credential()->getAccessKeyId();
+        }
+
+        $signature = $this->httpClient()->getSignature();
+        $this->options['headers']['signType'] = $signature->getMethod();
+        $this->options['headers']['sign'] = $this->signature();
+        // 其他公共参数
+    }
+
+    /**
+     * @return string
+     */
+    public function stringToSign()
+    {
+        $query       = isset($this->options['query']) ? $this->options['query'] : [];
+        $form_params = isset($this->options['form_params']) ? $this->options['form_params'] : [];
+        $json        = isset($this->options['json']) ? $this->options['json'] : [];
+        $parameters  = Arrays::merge([$query, $form_params, $json]);
+        ksort($parameters);
+
+        return json_encode($parameters);
     }
 }
