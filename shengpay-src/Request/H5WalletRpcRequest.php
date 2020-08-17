@@ -109,8 +109,8 @@ class H5WalletRpcRequest extends RpcRequest
         }
 
         $signature = $this->httpClient()->getSignature();
-        $this->options['headers']['signType'] = $signature->getMethod();
-        $this->options['headers']['sign'] = $this->signature();
+        $this->options['query']['signType'] = $signature->getMethod();
+        $this->options['query']['sign'] = $this->signature();
         // 其他公共参数
     }
 
