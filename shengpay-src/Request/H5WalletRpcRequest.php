@@ -4,7 +4,6 @@ namespace Pff\ShengPay\Request;
 
 use Exception;
 use Pff\Client\Exception\ClientException;
-use Pff\Client\Support\Arrays;
 
 /**
  * Class UserAccountRpcRequest
@@ -119,12 +118,8 @@ class H5WalletRpcRequest extends RpcRequest
      */
     public function stringToSign()
     {
-        $query       = isset($this->options['query']) ? $this->options['query'] : [];
-        $form_params = isset($this->options['form_params']) ? $this->options['form_params'] : [];
-        $json        = isset($this->options['json']) ? $this->options['json'] : [];
-        $parameters  = Arrays::merge([$query, $form_params, $json]);
+        $parameters  = $this->getParameters();
         ksort($parameters);
-
-        return json_encode($parameters);
+        return http_build_query($parameters);
     }
 }

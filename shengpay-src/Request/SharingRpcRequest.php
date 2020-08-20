@@ -148,6 +148,31 @@ class SharingRpcRequest extends RpcRequest
         $this->options['headers']['signMsg'] = $this->signature();
         // 其他公共参数
     }
+
+    /**
+     * Adjust parameter position
+     */
+    protected function repositionParameters()
+    {
+        if ($this->method === 'POST' || $this->method === 'PUT') {
+            foreach ($this->options['query'] as $key => $value) {
+                $this->options['json'][$key] = $value;
+            }
+            unset($this->options['query']);
+        }
+        ksort($this->options['json']);
+    }
+
+    /**
+     * @return string
+     */
+    public function stringToSign()
+    {
+        $parameters  = $this->getParameters();
+        ksort($parameters);
+        return json_encode($parameters);
+    }
+
 //账户余额查询: /v1/balance_inquiry
 //补充商户余额: /v1/funds_movement
 }

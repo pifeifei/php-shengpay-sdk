@@ -6,6 +6,7 @@ use Exception;
 use Pff\Client\Exception\ClientException;
 use Pff\Client\Exception\ServerException;
 use Pff\Client\Request\RpcRequest as ClientRpcRequest;
+use Pff\Client\Support\Arrays;
 
 class RpcRequest extends ClientRpcRequest
 {
@@ -89,5 +90,13 @@ class RpcRequest extends ClientRpcRequest
     public function realRegionId()
     {
         return $this->regionId = '';
+    }
+
+    protected function getParameters()
+    {
+        $query       = isset($this->options['query']) ? $this->options['query'] : [];
+        $form_params = isset($this->options['form_params']) ? $this->options['form_params'] : [];
+        $json        = isset($this->options['json']) ? $this->options['json'] : [];
+        return Arrays::merge([$query, $form_params, $json]);
     }
 }
