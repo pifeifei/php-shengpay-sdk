@@ -11,7 +11,7 @@ class MD5WithRsaSignature extends Signature implements SignatureInterface
      */
     public function getMethod()
     {
-        return 'MD5withRSA';
+        return 'RSA';
     }
 
     /**
