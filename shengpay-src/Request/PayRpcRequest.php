@@ -148,4 +148,26 @@ class PayRpcRequest extends RpcRequest
 
         return $this;
     }
+
+    /**
+     * Adjust parameter position
+     */
+    protected function repositionParameters()
+    {
+        if ($this->method === 'POST' || $this->method === 'PUT') {
+            foreach ($this->options['query'] as $key => $value) {
+                $this->options['json'][$key] = is_array($value) ? json_encode($value) : $value;
+            }
+            unset($this->options['query']);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function stringToSign()
+    {
+        $parameters  = $this->getParameters();
+        return json_encode($parameters);
+    }
 }

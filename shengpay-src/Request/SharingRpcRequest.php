@@ -141,7 +141,7 @@ class SharingRpcRequest extends RpcRequest
             $this->options['query']['senderId'] = $this->credential()->getAccessKeyId();
             $this->options['query']['customerNo'] = $this->credential()->getAccessKeyId();
         }
-        $this->options['query']['senderTime']    = date($this->dateTimeFormat);
+        $this->options['query']['senderTime']    = intval(microtime(true) * 1000);
 
         $signature = $this->httpClient()->getSignature();
         $this->options['headers']['signType'] = $signature->getMethod();
