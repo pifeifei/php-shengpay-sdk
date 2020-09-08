@@ -168,6 +168,9 @@ class PayRpcRequest extends RpcRequest
     public function stringToSign()
     {
         $parameters  = $this->getParameters();
+        foreach ($parameters as $key => $value) {
+            $parameters[$key] = is_array($value) ? json_encode($value) : $value;
+        }
         return json_encode($parameters);
     }
 }

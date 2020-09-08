@@ -138,4 +138,17 @@ trait HttpTrait
 
         return $this;
     }
+
+    /**
+     * @param string $option
+     * @return $this
+     */
+    public function forgetOption($option)
+    {
+        if (isset($this->options[$option])) {
+            unset($this->options[$option]);
+        }
+
+        return $this;
+    }
 }
