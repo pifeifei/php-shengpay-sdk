@@ -6,21 +6,31 @@ use Exception;
 use Pff\Client\Exception\ClientException;
 
 /**
- * H5 钱包
+ * Class MemberRpcRequest
  * @package Pff\ShengPay\Request
  */
-class H5WalletRpcRequest extends RpcRequest
+class MemberRpcRequest extends RpcRequest
 {
-    /* @var bool */
+    /**
+     * @deprecated
+     * @var bool
+     */
     protected $sandbox = false;
 
-    /* @var string */
+    /**
+     * @deprecated
+     * @var string
+     */
     protected $host = 'wmc.shengpay.com';
 
-    /* @var string */
+    /**
+     * @deprecated
+     * @var string
+     */
     protected $hostSandbox = 'wmctest.shengpay.com';
 
     /**
+     * @deprecated
      * @return bool
      */
     public function inSandbox()
@@ -29,7 +39,8 @@ class H5WalletRpcRequest extends RpcRequest
     }
 
     /**
-     * 设置在测试环境中运行
+     * @deprecated
+     * 设置在沙箱中运行
      *
      * @param bool $sandbox
      */
@@ -39,6 +50,7 @@ class H5WalletRpcRequest extends RpcRequest
     }
 
     /**
+     * @deprecated
      * 自动设置域名
      * @return $this
      * @throws ClientException
@@ -54,11 +66,11 @@ class H5WalletRpcRequest extends RpcRequest
     }
 
     /**
-     * 钱包用户xxx TODO: xx
+     * 开通个人盛付通账户
      * @param $sharing
      * @return $this
      * @throws ClientException
-     * @see http://docs.shengpay.com/7.1.H5%E9%92%B1%E5%8C%85.html
+     * @see https://docs.shengpay.com/4.1.%E9%9D%99%E9%BB%98%E5%BC%80%E6%88%B7.html
      */
     public function register($sharing)
     {
@@ -79,7 +91,8 @@ class H5WalletRpcRequest extends RpcRequest
      */
     protected function wrap($endpoint)
     {
-        return '/' . ltrim($endpoint, '/');
+//        $this->autoHostOrSandboxHost();
+        return ("cloud/v1/") . ltrim($endpoint, '/');
     }
 
     /**
