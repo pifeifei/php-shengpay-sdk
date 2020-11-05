@@ -13,6 +13,54 @@ use Pff\Client\Exception\ClientException;
 class SharingRpcRequest extends RpcRequest
 {
     /**
+     * @var bool
+     */
+    protected $sandbox = false;
+
+    /**
+     * @var string
+     */
+    protected $host = 'openapi.shengpay.com';
+
+    /**
+     * @var string
+     */
+    protected $hostSandbox = 'openapitest.shengpay.com';
+
+    /**
+     * @return bool
+     */
+    public function inSandbox()
+    {
+        return (bool) $this->sandbox;
+    }
+
+    /**
+     * 设置在沙箱中运行
+     *
+     * @param bool $sandbox
+     */
+    public function setSandbox($sandbox)
+    {
+        $this->sandbox = $sandbox;
+    }
+
+    /**
+     * 自动设置域名
+     * @return $this
+     * @throws ClientException
+     */
+    protected function autoHostOrSandboxHost()
+    {
+        if ($this->inSandbox()) {
+            $this->host($this->hostSandbox);
+        } else {
+            $this->host($this->host);
+        }
+        return $this;
+    }
+
+    /**
      * 分账
      * @param $sharing
      * @return SharingRpcRequest
