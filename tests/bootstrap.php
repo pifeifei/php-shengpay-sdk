@@ -31,6 +31,7 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
 
 $env = dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env';
 if (is_readable($env)) {
+    (new Dotenv())->load($env);
     try {
         AlibabaCloud::load($env);
         $default = AlibabaCloud::getDefaultClient()->getCredential();
